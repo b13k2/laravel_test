@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,3 +18,10 @@ declare(strict_types=1);
 |
 */
 
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::resource('products', ProductController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy',]);
+
+Route::resource('documents', DocumentController::class)
+    ->only(['index', 'create', 'store', 'edit',]);

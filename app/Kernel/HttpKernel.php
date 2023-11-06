@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace app\Kernel;
 
+use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\PreventRequestsDuringMaintenance;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\TrimStrings;
+use App\Http\Middleware\TrustHosts;
+use App\Http\Middleware\TrustProxies;
+use App\Http\Middleware\ValidateSignature;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
@@ -30,12 +38,12 @@ class HttpKernel extends Kernel
      * @var array<int, class-string|string>
      */
     protected $middleware = [
-        // \App\Http\Middleware\TrustHosts::class,
-        // \App\Http\Middleware\TrustProxies::class,
+        TrustHosts::class,
+        TrustProxies::class,
         HandleCors::class,
-        // \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
+        PreventRequestsDuringMaintenance::class,
         ValidatePostSize::class,
-        // \App\Http\Middleware\TrimStrings::class,
+        TrimStrings::class,
         ConvertEmptyStringsToNull::class,
     ];
 
@@ -46,11 +54,11 @@ class HttpKernel extends Kernel
      */
     protected $middlewareGroups = [
         'web' => [
-            // \App\Http\Middleware\EncryptCookies::class,
+            EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
-            // \App\Http\Middleware\VerifyCsrfToken::class,
+            VerifyCsrfToken::class,
             SubstituteBindings::class,
         ],
 
@@ -70,9 +78,9 @@ class HttpKernel extends Kernel
         'auth.session' => AuthenticateSession::class,
         'cache.headers' => SetCacheHeaders::class,
         'can' => Authorize::class,
-        // 'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => RedirectIfAuthenticated::class,
         'password.confirm' => RequirePassword::class,
-        // 'signed' => \App\Http\Middleware\ValidateSignature::class,
+        'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
     ];

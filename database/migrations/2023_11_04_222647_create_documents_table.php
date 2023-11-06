@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->unsignedTinyInteger('type');
+            $table->unsignedTinyInteger('type_id');
 
             $table->timestamps();
             $table->softDeletes();

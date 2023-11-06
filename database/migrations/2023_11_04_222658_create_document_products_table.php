@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('document_products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('document_id');
-            $table->string('product_vendor_code', 100);
+            $table->unsignedBigInteger('product_id');
             $table->unsignedSmallInteger('product_quantity');
 
             $table->timestamps();
